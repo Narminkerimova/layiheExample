@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="az">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PsyCenter - Zihinsel Sağlığınızın Dijital Dostu</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --primary: #7dd3c0;
+        --primary-dark: #5cb3a1;
+        --secondary: #ffd93d;
+        --accent: #6c5ce7;
+        --neutral-100: #f8fafc;
+        --neutral-200: #e2e8f0;
+        --neutral-800: #1e293b;
+        --neutral-600: #475569;
+        --success: #10b981;
+        --gradient-main: linear-gradient(135deg, #7dd3c0 0%, #a8e6cf 100%);
+        --gradient-warm: linear-gradient(135deg, #ffd93d 0%, #ffb347 100%);
+        --shadow-soft: 0 10px 25px -5px rgba(0, 0, 0, 0.1),
+          0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        --shadow-strong: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      }
+
+      body {
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Roboto, sans-serif;
+        line-height: 1.6;
+        color: var(--neutral-800);
+        background: var(--neutral-100);
+        overflow-x: hidden;
+      }
+
+      /* Smooth animations */
+      * {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      /* Header */
+      .header {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid rgba(125, 211, 192, 0.1);
+        z-index: 1000;
+        transform: translateY(0);
+      }
+
+      .header.scrolled {
+        transform: translateY(0);
+        box-shadow: var(--shadow-soft);
+      }
+
+      .nav {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-size: 1.75rem;
+        font-weight: 800;
+        color: var(--primary);
+        text-decoration: none;
+      }
+
+      .logo-icon {
+        width: 40px;
+        height: 40px;
+        background: var(--gradient-main);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.2rem;
+      }
+
+      .nav-menu {
+        display: flex;
+        list-style: none;
+        gap: 2.5rem;
+        align-items: center;
+      }
+
+      .nav-link {
+        text-decoration: none;
+        color: var(--neutral-600);
+        font-weight: 500;
+        position: relative;
+        padding: 0.5rem 0;
+      }
+
+      .nav-link:hover {
+        color: var(--primary);
+      }
+
+      .nav-link::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: var(--gradient-main);
+        border-radius: 1px;
+        transition: width 0.3s ease;
+      }
+
+      .nav-link:hover::after {
+        width: 100%;
+      }
+
+      .nav-actions {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+      }
+
+      .btn {
+        padding: 0.75rem 1.5rem;
+        border-radius: 12px;
+        font-weight: 600;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .btn::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.2),
+          transparent
+        );
+        transition: left 0.5s;
+      }
+
+      .btn:hover::before {
+        left: 100%;
+      }
+
+      .btn-outline {
+        background: transparent;
+        color: var(--primary);
+        border: 2px solid var(--primary);
+      }
+
+      .btn-outline:hover {
+        background: var(--primary);
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(125, 211, 192, 0.3);
+      }
+
+      .btn-primary {
+        background: var(--gradient-main);
+        color: white;
+        border: none;
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 30px rgba(125, 211, 192, 0.4);
+      }
+
+      /* Hero Section */
+      .hero {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        right: -20%;
+        width: 100%;
+        height: 200%;
+        background: radial-gradient(
+          circle,
+          rgba(125, 211, 192, 0.1) 0%,
+          transparent 70%
+        );
+        animation: float 6s ease-in-out infinite;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0px) rotate(0deg);
+        }
+        50% {
+          transform: translateY(-20px) rotate(2deg);
+        }
+      }
+
+      .hero-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 2rem;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+        align-items: center;
+        position: relative;
+        z-index: 2;
+      }
+
+      .hero-content {
+        max-width: 600px;
+      }
+
+      .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: rgba(125, 211, 192, 0.1);
+        color: var(--primary-dark);
+        padding: 0.5rem 1rem;
+        border-radius: 50px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-bottom: 2rem;
+        border: 1px solid rgba(125, 211, 192, 0.2);
+      }
+
+      .hero-title {
+        font-size: 4rem;
+        font-weight: 900;
+        line-height: 1.1;
+        margin-bottom: 1.5rem;
+        background: linear-gradient(135deg, var(--neutral-800), var(--primary));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .hero-subtitle {
+        font-size: 1.25rem;
+        color: var(--neutral-600);
+        margin-bottom: 3rem;
+        line-height: 1.7;
+      }
+
+      .hero-actions {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+        margin-bottom: 3rem;
+      }
+
+      .hero-stats {
+        display: flex;
+        gap: 2rem;
+        margin-top: 2rem;
+      }
+
+      .stat-item {
+        text-align: center;
+      }
+
+      .stat-number {
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--primary);
+        display: block;
+      }
+
+      .stat-label {
+        font-size: 0.9rem;
+        color: var(--neutral-600);
+      }
+
+      /* Hero Visual */
+      .hero-visual {
+        position: relative;
+        height: 600px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .visual-card {
+        position: absolute;
+        background: white;
+        border-radius: 20px;
+        box-shadow: var(--shadow-soft);
+        padding: 2rem;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .visual-card:hover {
+        transform: translateY(-10px) scale(1.02);
+        box-shadow: var(--shadow-strong);
+      }
+
+      .card-1 {
+        top: 10%;
+        left: 0;
+        width: 220px;
+        background: linear-gradient(135deg, rgba(125, 211, 192, 0.1), white);
+        animation: float 4s ease-in-out infinite;
+      }
+
+      .card-2 {
+        top: 30%;
+        right: 0;
+        width: 200px;
+        background: linear-gradient(135deg, rgba(255, 217, 61, 0.1), white);
+        animation: float 4s ease-in-out infinite 1s;
+      }
+
+      .card-3 {
+        bottom: 15%;
+        left: 15%;
+        width: 210px;
+        background: linear-gradient(135deg, rgba(108, 92, 231, 0.1), white);
+        animation: float 4s ease-in-out infinite 2s;
+      }
+
+      .card-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .card-title {
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        color: var(--neutral-800);
+      }
+
+      .card-desc {
+        font-size: 0.9rem;
+        color: var(--neutral-600);
+      }
+
+      /* Features Section */
+      .features {
+        padding: 8rem 0;
+        background: white;
+        position: relative;
+      }
+
+      .section-header {
+        text-align: center;
+        max-width: 800px;
+        margin: 0 auto 5rem;
+      }
+
+      .section-badge {
+        display: inline-block;
+        background: var(--gradient-warm);
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 50px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+      }
+
+      .section-title {
+        font-size: 3rem;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        color: var(--neutral-800);
+      }
+
+      .section-subtitle {
+        font-size: 1.2rem;
+        color: var(--neutral-600);
+        line-height: 1.6;
+      }
+
+      .features-grid {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 2rem;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 2rem;
+      }
+
+      .feature-card {
+        background: linear-gradient(145deg, #ffffff, #f8fafc);
+        padding: 2.5rem;
+        border-radius: 24px;
+        border: 1px solid var(--neutral-200);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .feature-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: var(--gradient-main);
+      }
+
+      .feature-card:hover {
+        transform: translateY(-8px);
+        box-shadow: var(--shadow-strong);
+      }
+
+      .feature-icon {
+        width: 70px;
+        height: 70px;
+        background: var(--gradient-main);
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        color: white;
+        margin-bottom: 1.5rem;
+      }
+
+      .feature-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        color: var(--neutral-800);
+      }
+
+      .feature-desc {
+        color: var(--neutral-600);
+        line-height: 1.7;
+        margin-bottom: 1.5rem;
+      }
+
+      .feature-link {
+        color: var(--primary);
+        font-weight: 600;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .feature-link:hover {
+        gap: 1rem;
+      }
+
+      /* Doctors Section */
+      .doctors {
+        padding: 8rem 0;
+        background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+      }
+
+      .doctors-grid {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 2rem;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 2rem;
+      }
+
+      .doctor-card {
+        background: white;
+        border-radius: 24px;
+        overflow: hidden;
+        box-shadow: var(--shadow-soft);
+        transition: all 0.4s ease;
+        position: relative;
+      }
+
+      .doctor-card:hover {
+        transform: translateY(-10px);
+        box-shadow: var(--shadow-strong);
+      }
+
+      .doctor-header {
+        background: var(--gradient-main);
+        height: 120px;
+        position: relative;
+      }
+
+      .doctor-avatar {
+        position: absolute;
+        bottom: -40px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 80px;
+        background: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: var(--primary);
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .doctor-info {
+        padding: 3rem 2rem 2rem;
+        text-align: center;
+      }
+
+      .doctor-name {
+        font-size: 1.3rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        color: var(--neutral-800);
+      }
+
+      .doctor-specialty {
+        color: var(--primary);
+        font-weight: 600;
+        margin-bottom: 1rem;
+      }
+
+      .doctor-rating {
+        display: flex;
+        justify-content: center;
+        gap: 0.2rem;
+        margin-bottom: 1rem;
+      }
+
+      .star {
+        color: #fbbf24;
+      }
+
+      .doctor-stats {
+        display: flex;
+        justify-content: space-around;
+        margin: 1.5rem 0;
+        padding: 1rem 0;
+        border-top: 1px solid var(--neutral-200);
+      }
+
+      .doctor-stat {
+        text-align: center;
+      }
+
+      .stat-num {
+        font-weight: 700;
+        color: var(--primary);
+        display: block;
+      }
+
+      .stat-text {
+        font-size: 0.8rem;
+        color: var(--neutral-600);
+      }
+
+      /* CTA Section */
+      .cta {
+        padding: 8rem 0;
+        background: var(--gradient-main);
+        color: white;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .cta::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(
+          circle,
+          rgba(255, 255, 255, 0.1) 0%,
+          transparent 70%
+        );
+        animation: rotate 20s linear infinite;
+      }
+
+      @keyframes rotate {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .cta-content {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 0 2rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      .cta-title {
+        font-size: 3rem;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+      }
+
+      .cta-subtitle {
+        font-size: 1.3rem;
+        opacity: 0.9;
+        margin-bottom: 3rem;
+        line-height: 1.6;
+      }
+
+      .cta-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .btn-white {
+        background: white;
+        color: var(--primary);
+      }
+
+      .btn-white:hover {
+        background: rgba(255, 255, 255, 0.9);
+        transform: translateY(-3px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      }
+
+      /* Mobile Responsive */
+      @media (max-width: 768px) {
+        .nav-menu {
+          display: none;
+        }
+
+        .hero-container {
+          grid-template-columns: 1fr;
+          text-align: center;
+          gap: 2rem;
+        }
+
+        .hero-title {
+          font-size: 2.5rem;
+        }
+
+        .hero-visual {
+          height: 400px;
+        }
+
+        .section-title {
+          font-size: 2rem;
+        }
+
+        .cta-title {
+          font-size: 2rem;
+        }
+
+        .hero-stats {
+          justify-content: center;
+        }
+      }
+
+      /* Scroll animations */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(50px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .animate-on-scroll {
+        opacity: 0;
+        animation: fadeInUp 0.8s ease forwards;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header" id="header">
+      <nav class="nav">
+        <a href="#" class="logo">
+          <div class="logo-icon">
+            <i class="fas fa-brain"></i>
+          </div>
+          PsyCenter
+        </a>
+
+        <ul class="nav-menu">
+          <li><a href="#" class="nav-link">Ana Səhifə</a></li>
+          <li><a href="#" class="nav-link">Testlər</a></li>
+          <li><a href="#" class="nav-link">Həkimlər</a></li>
+          <li><a href="#" class="nav-link">Blog</a></li>
+          <li><a href="#" class="nav-link">Haqqımızda</a></li>
+        </ul>
+
+        <div class="nav-actions">
+          <a href="#" class="btn btn-outline">
+            <i class="fas fa-sign-in-alt"></i>
+            Giriş
+          </a>
+          <a href="#" class="btn btn-primary">
+            <i class="fas fa-user-plus"></i>
+            Qeydiyyat
+          </a>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-container">
+        <div class="hero-content">
+          <div class="hero-badge">
+            <i class="fas fa-sparkles"></i>
+            AI ilə gücləndirilmiş psixoloji dəstək
+          </div>
+
+          <h1 class="hero-title">
+            Zihninizin
+            <br />sağlamlığı <br />bizim prioritetimiz
+          </h1>
+
+          <p class="hero-subtitle">
+            Peşəkar psixoloqlar, AI köməkçi və elmi testlərlə dəstəklənən
+            rəqəmsal platform. Stress və depresiyadan qurtulmaq üçün ilk
+            addımınızı atın.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#" class="btn btn-primary">
+              <i class="fas fa-play"></i>
+              Pulsuz Test Başlat
+            </a>
+            <a href="#" class="btn btn-outline">
+              <i class="fas fa-calendar-check"></i>
+              Həkim Randevusu
+            </a>
+          </div>
+
+          <div class="hero-stats">
+            <div class="stat-item">
+              <span class="stat-number">1000+</span>
+              <span class="stat-label">Xoşbəxt istifadəçi</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">50+</span>
+              <span class="stat-label">Peşəkar həkim</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">24/7</span>
+              <span class="stat-label">AI dəstək</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="visual-card card-1">
+            <div
+              class="card-icon"
+              style="background: var(--gradient-main); color: white"
+            >
+              <i class="fas fa-brain"></i>
+            </div>
+            <h3 class="card-title">Stress Analizi</h3>
+            <p class="card-desc">
+              Stress səviyyənizi real vaxtda ölçün və nəticələri alın
+            </p>
+          </div>
+
+          <div class="visual-card card-2">
+            <div
+              class="card-icon"
+              style="background: var(--gradient-warm); color: white"
+            >
+              <i class="fas fa-comments"></i>
+            </div>
+            <h3 class="card-title">Canlı Chat</h3>
+            <p class="card-desc">
+              Həkimlərlə birbaşa əlaqə qurun və məsləhət alın
+            </p>
+          </div>
+
+          <div class="visual-card card-3">
+            <div
+              class="card-icon"
+              style="
+                background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+                color: white;
+              "
+            >
+              <i class="fas fa-robot"></i>
+            </div>
+            <h3 class="card-title">AI Köməkçi</h3>
+            <p class="card-desc">24/7 suallarınıza anında cavab alın</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+      <div class="section-header">
+        <div class="section-badge">✨ Xidmətlərimiz</div>
+        <h2 class="section-title">Hərtərəfli Psixoloji Dəstək</h2>
+        <p class="section-subtitle">
+          Zihinsel sağlamlığınız üçün elmi yanaşma və müasir texnologiyaların
+          birləşdiyi peşəkar xidmətlər təqdim edirik
+        </p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-clipboard-check"></i>
+          </div>
+          <h3 class="feature-title">Elmi Psixoloji Testlər</h3>
+          <p class="feature-desc">
+            Beynəlxalq standartlara uyğun hazırlanmış stress, depresiya və
+            anksiyete testləri ilə durumunuzu dəqiq qiymətləndirin.
+          </p>
+          <a href="#" class="feature-link">
+            Test et <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-video"></i>
+          </div>
+          <h3 class="feature-title">Online Terapiya Seansları</h3>
+          <p class="feature-desc">
+            Sertifikatlı psixoloqlarla video çağrı və ya mesajlaşma yolu ilə
+            fərdi terapiya seansları keçirin.
+          </p>
+          <a href="#" class="feature-link">
+            Başla <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-calendar-alt"></i>
+          </div>
+          <h3 class="feature-title">Ağıllı Randevu Sistemi</h3>
+          <p class="feature-desc">
+            Google Calendar inteqrasiyası ilə həkimlərin uyğun vaxtlarını görün
+            və randevu təyin edin.
+          </p>
+          <a href="#" class="feature-link">
+            Randevu al <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-robot"></i>
+          </div>
+          <h3 class="feature-title">AI Psixoloji Məsləhətçi</h3>
+          <p class="feature-desc">
+            24/7 mövcud olan süni intellekt köməkçimizdən anında cavablar alın
+            və ilkin dəstək götürün.
+          </p>
+          <a href="#" class="feature-link">
+            Soruş <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-book-open"></i>
+          </div>
+          <h3 class="feature-title">Ekspert Blog Məqalələri</h3>
+          <p class="feature-desc">
+            Həkimlərimizin yazdığı faydalı məqalələr və psixoloji sağlamlıq üzrə
+            məsləhətləri oxuyun.
+          </p>
+          <a href="#" class="feature-link">
+            Oxu <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-chart-line"></i>
+          </div>
+          <h3 class="feature-title">Şəxsi İrəliləyiş Takibi</h3>
+          <p class="feature-desc">
+            Test nəticələrinizi və terapiya prossesinizi izləyin,
+            irəliləyişinizi görün və məqsədlər qoyun.
+          </p>
+          <a href="#" class="feature-link">
+            İzlə <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Doctors Section -->
+    <section class="doctors">
+      <div class="section-header">
+        <div class="section-badge">👨‍⚕️ Komandamız</div>
+        <h2 class="section-title">Peşəkar Psixoloqlarımız</h2>
+        <p class="section-subtitle">
+          Təcrübəli və sertifikatlı mütəxəssislərimizdən keyfiyyətli psixoloji
+          dəstək alın
+        </p>
+      </div>
+
+      <div class="doctors-grid">
+        <div class="doctors-grid">
+    <div class="doctor-card">
+      <div class="doctor-header"></div>
+      <div class="doctor-avatar">RƏ</div>
+      <div class="doctor-info">
+        <h3 class="doctor-name">Dr. Rəna Əliyeva</h3>
+        <div class="doctor-specialty">Klinik Psixoloq</div>
+      </div>
+    </div>
+
+    <div class="doctor-card">
+      <div class="doctor-header"></div>
+      <div class="doctor-avatar">EQ</div>
+      <div class="doctor-info">
+        <h3 class="doctor-name">Dr. Elvin Quliyev</h3>
+        <div class="doctor-specialty">Uşaq Psixoloqu</div>
+      </div>
+    </div>
+
+    <div class="doctor-card">
+      <div class="doctor-header"></div>
+      <div class="doctor-avatar">SA</div>
+      <div class="doctor-info">
+        <h3 class="doctor-name">Dr. Sona Aslanova</h3>
+        <div class="doctor-specialty">Psixoterapevt</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer Section -->
+<footer style="background: var(--primary-dark); color: white; padding: 4rem 2rem; text-align: center;">
+  <div style="max-width: 1000px; margin: 0 auto;">
+    <h3 style="font-size: 1.8rem; font-weight: 700; margin-bottom: 1rem;">PsyCenter</h3>
+    <p style="margin-bottom: 2rem;">
+      Zihinsel sağlığınız üçün 24/7 rəqəmsal dəstək. Bizimlə güvənli və elmi əsaslı bir yolda irəliləyin.
+    </p>
+    <div style="margin-bottom: 1rem;">
+      <a href="#" style="color: white; text-decoration: none; margin: 0 1rem;">Əlaqə</a>
+      <a href="#" style="color: white; text-decoration: none; margin: 0 1rem;">Şərtlər</a>
+      <a href="#" style="color: white; text-decoration: none; margin: 0 1rem;">Məxfilik</a>
+    </div>
+    <p style="font-size: 0.85rem; color: rgba(255,255,255,0.6);">
+      &copy; 2025 PsyCenter. Bütün huquqlar qorunur.
+    </p>
+  </div>
+</footer>
+</body>
+</html>
+
