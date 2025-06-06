@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pasiyent Dashboard - PsyCenter</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f8fffe 0%, #e8f5f3 100%);
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 1rem 0;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #2d7d6b;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background: #a8d5ce;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #2d7d6b;
+            font-weight: bold;
+        }
+
+        .logout-btn {
+            background: #dc3545;
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: #c82333;
+        }
+
+        /* Main Layout */
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 2rem;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            padding: 1.5rem;
+            height: fit-content;
+            position: sticky;
+            top: 2rem;
+        }
+
+        .sidebar h3 {
+            color: #2d7d6b;
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar li {
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar a {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.8rem;
+            text-decoration: none;
+            color: #666;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .sidebar a:hover, .sidebar a.active {
+            background: #e8f5f3;
+            color: #2d7d6b;
+        }
+
+        /* Content Area */
+        .content {
+            display: grid;
+            gap: 2rem;
+        }
+
+        /* Welcome Section */
+        .welcome-card {
+            background: linear-gradient(135deg, #2d7d6b, #4a9d8a);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(45, 125, 107, 0.3);
+        }
+
+        .welcome-card h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .welcome-card p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            background: #a8d5ce;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 1.5rem;
+            color: #2d7d6b;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #2d7d6b;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .quick-actions h2 {
+            color: #2d7d6b;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .actions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .action-btn {
+            background: #f8fffe;
+            border: 2px solid #a8d5ce;
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-decoration: none;
+            color: #2d7d6b;
+            text-align: center;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .action-btn:hover {
+            background: #2d7d6b;
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .action-btn .icon {
+            font-size: 2rem;
+        }
+
+        /* Recent Activity */
+        .recent-activity {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .recent-activity h2 {
+            color: #2d7d6b;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            background: #e8f5f3;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #2d7d6b;
+        }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.2rem;
+        }
+
+        .activity-time {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Test Results */
+        .test-results {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .test-results h2 {
+            color: #2d7d6b;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .test-item {
+            background: #f8fffe;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            border-left: 4px solid #2d7d6b;
+        }
+
+        .test-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .test-name {
+            font-weight: bold;
+            color: #2d7d6b;
+        }
+
+        .test-date {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .test-score {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .score-bar {
+            flex: 1;
+            height: 8px;
+            background: #eee;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .score-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #2d7d6b, #4a9d8a);
+            transition: width 0.3s ease;
+        }
+
+        .score-text {
+            font-weight: bold;
+            color: #2d7d6b;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-container {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+            }
+            
+            .sidebar {
+                position: static;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .actions-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid,
+            .actions-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animations */
+        .fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">🧠 PsyCenter</div>
+            <div class="user-info">
+                <div class="user-avatar">AH</div>
+                <span>Ayşə Həsənova</span>
+                <button class="logout-btn" onclick="logout()">Çıxış</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <h3>📋 Menyu</h3>
+            <ul>
+                <li><a href="#dashboard" class="active">🏠 Ana Səhifə</a></li>
+                <li><a href="#tests">📊 Testlər</a></li>
+                <li><a href="#appointments">📅 Randevular</a></li>
+                <li><a href="#doctors">👨‍⚕️ Həkimlər</a></li>
+                <li><a href="#chat">💬 Mesajlar</a></li>
+                <li><a href="#ai-assistant">🤖 AI Köməkçi</a></li>
+                <li><a href="#progress">📈 İrəliləyiş</a></li>
+                <li><a href="#blog">📚 Blog</a></li>
+                <li><a href="#settings">⚙️ Parametrlər</a></li>
+            </ul>
+        </aside>
+
+        <!-- Content -->
+        <main class="content fade-in">
+            <!-- Welcome Card -->
+            <div class="welcome-card">
+                <h1>Xoş gəlmisiniz, Ayşə! 👋</h1>
+                <p>Bu gün necəsiniz? Mental sağlamlığınız bizim üçün vacibdir.</p>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">📊</div>
+                    <div class="stat-number">7</div>
+                    <div class="stat-label">Tamamlanan Test</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📅</div>
+                    <div class="stat-number">3</div>
+                    <div class="stat-label">Planlaşan Randevu</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">💬</div>
+                    <div class="stat-number">12</div>
+                    <div class="stat-label">Yeni Mesaj</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📈</div>
+                    <div class="stat-number">78%</div>
+                    <div class="stat-label">İrəliləyiş</div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="quick-actions">
+                <h2>Tez Hərəkətlər</h2>
+                <div class="actions-grid">
+                    <a href="#new-test" class="action-btn">
+                        <span class="icon">📋</span>
+                        <span>Yeni Test</span>
+                    </a>
+                    <a href="#book-appointment" class="action-btn">
+                        <span class="icon">📅</span>
+                        <span>Randevu Al</span>
+                    </a>
+                    <a href="#find-doctor" class="action-btn">
+                        <span class="icon">🔍</span>
+                        <span>Həkim Tap</span>
+                    </a>
+                    <a href="#ai-chat" class="action-btn">
+                        <span class="icon">🤖</span>
+                        <span>AI ilə Danış</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Recent Test Results -->
+            <div class="test-results">
+                <h2>Son Test Nəticələri</h2>
+                
+                <div class="test-item">
+                    <div class="test-header">
+                        <span class="test-name">Stress Səviyyəsi Testi</span>
+                        <span class="test-date">2 gün əvvəl</span>
+                    </div>
+                    <div class="test-score">
+                        <div class="score-bar">
+                            <div class="score-fill" style="width: 35%"></div>
+                        </div>
+                        <span class="score-text">35/100 - Aşağı</span>
+                    </div>
+                </div>
+
+                <div class="test-item">
+                    <div class="test-header">
+                        <span class="test-name">Depresiya Testi</span>
+                        <span class="test-date">1 həftə əvvəl</span>
+                    </div>
+                    <div class="test-score">
+                        <div class="score-bar">
+                            <div class="score-fill" style="width: 20%"></div>
+                        </div>
+                        <span class="score-text">20/100 - Minimal</span>
+                    </div>
+                </div>
+
+                <div class="test-item">
+                    <div class="test-header">
+                        <span class="test-name">Narahatlıq Testi</span>
+                        <span class="test-date">2 həftə əvvəl</span>
+                    </div>
+                    <div class="test-score">
+                        <div class="score-bar">
+                            <div class="score-fill" style="width: 45%"></div>
+                        </div>
+                        <span class="score-text">45/100 - Orta</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="recent-activity">
+                <h2>Son Aktivitələr</h2>
+                
+                <div class="activity-item">
+                    <div class="activity-icon">📋</div>
+                    <div class="activity-content">
+                        <div class="activity-title">Stress testi tamamlandı</div>
+                        <div class="activity-time">2 gün əvvəl</div>
+                    </div>
+                </div>
+
+                <div class="activity-item">
+                    <div class="activity-icon">💬</div>
+                    <div class="activity-content">
+                        <div class="activity-title">Dr. Məmmədovdan yeni mesaj</div>
+                        <div class="activity-time">3 gün əvvəl</div>
+                    </div>
+                </div>
+
+                <div class="activity-item">
+                    <div class="activity-icon">📅</div>
+                    <div class="activity-content">
+                        <div class="activity-title">Randevu təsdiqləndi</div>
+                        <div class="activity-time">5 gün əvvəl</div>
+                    </div>
+                </div>
+
+                <div class="activity-item">
+                    <div class="activity-icon">📚</div>
+                    <div class="activity-content">
+                        <div class="activity-title">Blog məqaləsi oxundu</div>
+                        <div class="activity-time">1 həftə əvvəl</div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        function logout() {
+            if(confirm('Çıxış etmək istədiyinizə əminsiniz?')) {
+                alert('Çıxış edilir...');
+                // Ana səhifəyə yönləndirmə
+            }
+        }
+
+        // Sidebar navigation
+        document.querySelectorAll('.sidebar a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Remove active class from all links
+                document.querySelectorAll('.sidebar a').forEach(l => l.classList.remove('active'));
+                
+                // Add active class to clicked link
+                this.classList.add('active');
+                
+                // Here you can add logic to show different content
+                alert(`${this.textContent} səhifəsi yüklənir...`);
+            });
+        });
+
+        // Quick action buttons
+        document.querySelectorAll('.action-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                alert(`${this.textContent.trim()} açılır...`);
+            });
+        });
+
+        // Add loading animation for content
+        document.addEventListener('DOMContentLoaded', function() {
+            const elements = document.querySelectorAll('.stat-card, .test-item, .activity-item');
+            elements.forEach((el, index) => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                
+                setTimeout(() => {
+                    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+    </script>
+</body>
+</html>
