@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="az">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PsyCenter - Zihinsel Sağlığınızın Dijital Dostu</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      /* styles-main.css - Əsas Stillər */
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --primary: #7dd3c0;
+        --primary-dark: #5cb3a1;
+        --secondary: #ffd93d;
+        --accent: #6c5ce7;
+        --neutral-100: #f8fafc;
+        --neutral-200: #e2e8f0;
+        --neutral-800: #1e293b;
+        --neutral-600: #475569;
+        --success: #10b981;
+        --gradient-main: linear-gradient(135deg, #7dd3c0 0%, #a8e6cf 100%);
+        --gradient-warm: linear-gradient(135deg, #ffd93d 0%, #ffb347 100%);
+        --shadow-soft: 0 10px 25px -5px rgba(0, 0, 0, 0.1),
+          0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        --shadow-strong: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      }
+
+      body {
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Roboto, sans-serif;
+        line-height: 1.6;
+        color: var(--neutral-800);
+        background: var(--neutral-100);
+        overflow-x: hidden;
+      }
+
+      /* Smooth animations */
+      * {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      /* Header */
+      .header {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid rgba(125, 211, 192, 0.1);
+        z-index: 1000;
+        transform: translateY(0);
+      }
+
+      .header.scrolled {
+        transform: translateY(0);
+        box-shadow: var(--shadow-soft);
+      }
+
+      .nav {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-size: 1.75rem;
+        font-weight: 800;
+        color: var(--primary);
+        text-decoration: none;
+      }
+
+      .logo-icon {
+        width: 40px;
+        height: 40px;
+        background: var(--gradient-main);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.2rem;
+      }
+
+      .nav-menu {
+        display: flex;
+        list-style: none;
+        gap: 2.5rem;
+        align-items: center;
+      }
+
+      .nav-link {
+        text-decoration: none;
+        color: var(--neutral-600);
+        font-weight: 500;
+        position: relative;
+        padding: 0.5rem 0;
+      }
+
+      .nav-link:hover {
+        color: var(--primary);
+      }
+
+      .nav-link::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: var(--gradient-main);
+        border-radius: 1px;
+        transition: width 0.3s ease;
+      }
+
+      .nav-link:hover::after {
+        width: 100%;
+      }
+
+      .nav-actions {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+      }
+
+      /* Button Styles */
+      .btn {
+        padding: 0.75rem 1.5rem;
+        border-radius: 12px;
+        font-weight: 600;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .btn::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.2),
+          transparent
+        );
+        transition: left 0.5s;
+      }
+
+      .btn:hover::before {
+        left: 100%;
+      }
+
+      .btn-outline {
+        background: transparent;
+        color: var(--primary);
+        border: 2px solid var(--primary);
+      }
+
+      .btn-outline:hover {
+        background: var(--primary);
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(125, 211, 192, 0.3);
+      }
+
+      .btn-primary {
+        background: var(--gradient-main);
+        color: white;
+        border: none;
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 30px rgba(125, 211, 192, 0.4);
+      }
+
+      .btn-white {
+        background: white;
+        color: var(--primary);
+      }
+
+      .btn-white:hover {
+        background: rgba(255, 255, 255, 0.9);
+        transform: translateY(-3px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      }
+
+      /* Hero Section */
+      .hero {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        position: relative;
+        overflow: hidden;
+        padding: 6rem 0;
+      }
+
+      .hero::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        right: -20%;
+        width: 100%;
+        height: 200%;
+        background: radial-gradient(
+          circle,
+          rgba(125, 211, 192, 0.1) 0%,
+          transparent 70%
+        );
+        animation: float 6s ease-in-out infinite;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0px) rotate(0deg);
+        }
+        50% {
+          transform: translateY(-20px) rotate(2deg);
+        }
+      }
+
+      .hero-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 2rem;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+        align-items: center;
+        position: relative;
+        z-index: 2;
+      }
+
+      .hero-content {
+        max-width: 600px;
+      }
+
+      .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: rgba(125, 211, 192, 0.1);
+        color: var(--primary-dark);
+        padding: 0.5rem 1rem;
+        border-radius: 50px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-bottom: 2rem;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header" id="header">
+      <nav class="nav">
+        <a href="#" class="logo">
+          <div class="logo-icon">
+            <i class="fas fa-brain"></i>
+          </div>
+          PsyCenter
+        </a>
+
+        <ul class="nav-menu">
+          <li><a href="#" class="nav-link">Ana Səhifə</a></li>
+          <li><a href="#" class="nav-link">Testlər</a></li>
+          <li><a href="#" class="nav-link">Həkimlər</a></li>
+          <li><a href="#" class="nav-link">Blog</a></li>
+          <li><a href="#" class="nav-link">Haqqımızda</a></li>
+        </ul>
+
+        <div class="nav-actions">
+          <a href="#" class="btn btn-outline">
+            <i class="fas fa-sign-in-alt"></i>
+            Giriş
+          </a>
+          <a href="#" class="btn btn-primary">
+            <i class="fas fa-user-plus"></i>
+            Qeydiyyat
+          </a>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-container">
+        <div class="hero-content">
+          <div class="hero-badge">
+            <i class="fas fa-sparkles"></i>
+            AI ilə gücləndirilmiş psixoloji dəstək
+          </div>
+
+          <h1 class="hero-title">
+            Zihninizin
+            <br />sağlamlığı <br />bizim prioritetimiz
+          </h1>
+
+          <p class="hero-subtitle">
+            Peşəkar psixoloqlar, AI köməkçi və elmi testlərlə dəstəklənən
+            rəqəmsal platform. Stress və depresiyadan qurtulmaq üçün ilk
+            addımınızı atın.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#" class="btn btn-primary">
+              <i class="fas fa-play"></i>
+              Pulsuz Test Başlat
+            </a>
+            <a href="#" class="btn btn-outline">
+              <i class="fas fa-calendar-check"></i>
+              Həkim Randevusu
+            </a>
+          </div>
+
+          <div class="hero-stats">
+            <div class="stat-item">
+              <span class="stat-number">1000+</span>
+              <span class="stat-label">Xoşbəxt istifadəçi</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">50+</span>
+              <span class="stat-label">Peşəkar həkim</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">24/7</span>
+              <span class="stat-label">AI dəstək</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="visual-card card-1">
+            <div
+              class="card-icon"
+              style="background: var(--gradient-main); color: white"
+            >
+              <i class="fas fa-brain"></i>
+            </div>
+            <h3 class="card-title">Stress Analizi</h3>
+            <p class="card-desc">
+              Stress səviyyənizi real vaxtda ölçün və nəticələri alın
+            </p>
+          </div>
+
+          <div class="visual-card card-2">
+            <div
+              class="card-icon"
+              style="background: var(--gradient-warm); color: white"
+            >
+              <i class="fas fa-comments"></i>
+            </div>
+            <h3 class="card-title">Canlı Chat</h3>
+            <p class="card-desc">
+              Həkimlərlə birbaşa əlaqə qurun və məsləhət alın
+            </p>
+          </div>
+
+          <div class="visual-card card-3">
+            <div
+              class="card-icon"
+              style="
+                background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+                color: white;
+              "
+            >
+              <i class="fas fa-robot"></i>
+            </div>
+            <h3 class="card-title">AI Köməkçi</h3>
+            <p class="card-desc">24/7 suallarınıza anında cavab alın</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Image Gallery Section -->
+    <section class="image-gallery">
+      <div class="gallery-container">
+        <h2 class="gallery-title">Xidmətlərimizin Görüntüləri</h2>
+        <div class="gallery-grid">
+          <div class="gallery-item">
+            <img
+              src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=300&fit=crop"
+              alt="Online Terapiya"
+            />
+            <div class="gallery-overlay">
+              <h3>Online Terapiya</h3>
+              <p>Evinizdən rahat terapiya seansları</p>
+            </div>
+          </div>
+          <div class="gallery-item">
+            <img
+              src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=400&h=300&fit=crop"
+              alt="Psixoloji Testlər"
+            />
+            <div class="gallery-overlay">
+              <h3>Elmi Testlər</h3>
+              <p>Dəqiq və etibarlı psixoloji testlər</p>
+            </div>
+          </div>
+          <div class="gallery-item">
+            <img
+              src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=400&h=300&fit=crop"
+              alt="AI Köməkçi"
+            />
+            <div class="gallery-overlay">
+              <h3>AI Dəstək</h3>
+              <p>24/7 ağıllı köməkçi sistemi</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+      <div class="section-header">
+        <div class="section-badge">✨ Xidmətlərimiz</div>
+        <h2 class="section-title">Hərtərəfli Psixoloji Dəstək</h2>
+        <p class="section-subtitle">
+          Zihinsel sağlamlığınız üçün elmi yanaşma və müasir texnologiyaların
+          birləşdiyi peşəkar xidmətlər təqdim edirik
+        </p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-clipboard-check"></i>
+          </div>
+          <h3 class="feature-title">Elmi Psixoloji Testlər</h3>
+          <p class="feature-desc">
+            Beynəlxalq standartlara uyğun hazırlanmış stress, depresiya və
+            anksiyete testləri ilə durumunuzu dəqiq qiymətləndirin.
+          </p>
+          <a href="#" class="feature-link">
+            Test et <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-video"></i>
+          </div>
+          <h3 class="feature-title">Online Terapiya Seansları</h3>
+          <p class="feature-desc">
+            Sertifikatlı psixoloqlarla video çağrı və ya mesajlaşma yolu ilə
+            fərdi terapiya seansları keçirin.
+          </p>
+          <a href="#" class="feature-link">
+            Başla <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-calendar-alt"></i>
+          </div>
+          <h3 class="feature-title">Ağıllı Randevu Sistemi</h3>
+          <p class="feature-desc">
+            Google Calendar inteqrasiyası ilə həkimlərin uyğun vaxtlarını görün
+            və randevu təyin edin.
+          </p>
+          <a href="#" class="feature-link">
+            Randevu al <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-robot"></i>
+          </div>
+          <h3 class="feature-title">AI Psixoloji Məsləhətçi</h3>
+          <p class="feature-desc">
+            24/7 mövcud olan süni intellekt köməkçimizdən anında cavablar alın
+            və ilkin dəstək götürün.
+          </p>
+          <a href="#" class="feature-link">
+            Soruş <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-book-open"></i>
+          </div>
+          <h3 class="feature-title">Ekspert Blog Məqalələri</h3>
+          <p class="feature-desc">
+            Həkimlərimizin yazdığı faydalı məqalələr və psixoloji sağlamlıq üzrə
+            məsləhətləri oxuyun.
+          </p>
+          <a href="#" class="feature-link">
+            Oxu <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-chart-line"></i>
+          </div>
+          <h3 class="feature-title">Şəxsi İrəliləyiş Takibi</h3>
+          <p class="feature-desc">
+            Test nəticələrinizi və terapiya prossesinizi izləyin,
+            irəliləyişinizi görün və məqsədlər qoyun.
+          </p>
+          <a href="#" class="feature-link">
+            İzlə <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Doctors Section -->
+    <section class="doctors">
+      <div class="section-header">
+        <div class="section-badge">👨‍⚕️ Komandamız</div>
+        <h2 class="section-title">Peşəkar Psixoloqlarımız</h2>
+        <p class="section-subtitle">
+          Təcrübəli və sertifikatlı mütəxəssislərimizdən keyfiyyətli psixoloji
+          dəstək alın
+        </p>
+      </div>
+
+      <div class="doctors-grid">
+        <div class="doctor-card">
+          <div class="doctor-header"></div>
+          <div class="doctor-avatar">
+            <img
+              src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=100&h=100&fit=crop&crop=face"
+              alt="Dr. Rəna Əliyeva"
+            />
+          </div>
+          <div class="doctor-info">
+            <h3 class="doctor-name">Dr. Rəna Əliyeva</h3>
+            <div class="doctor-specialty">Klinik Psixoloq</div>
+            <div class="doctor-rating">
+              <i class="fas fa-star star"></i>
+              <i class="fas fa-star star"></i>
+              <i class="fas fa-star star"></i>
+              <i class="fas fa-star star"></i>
+              <i class="fas fa-star star"></i>
+            </div>
+            <div class="doctor-stats">
+              <div class="doctor-stat">
+                <span class="stat-num">15</span>
+                <span class="stat-text">İl təcrübə</span>
+              </div>
+              <div class="doctor-stat">
+                <span class="stat-num">500+</span>
+                <span class="stat-text">Xəstə</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="doctor-card">
+          <div class="doctor-header"></div>
+          <div class="doctor-avatar">
+            <img
+              src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=100&h=100&fit=crop&crop=face"
+              alt="Dr. Elvin Quliyev"
+            />
+          </div>
+          <div class="doctor-info">
+            <h3 class="doctor-name">Dr. Elvin Quliyev</h3>
+            <div class="doctor-specialty">Uşaq Psixoloqu</div>
+            <div class="doctor-rating">
+              <i class="fas fa-star star"></i>
+              <i class="fas fa-star star"></i>
+              <i class="fas fa-star star"></i>
+              <i class="fas fa-star star"></i>
+              <i class="fas fa-star star"></i>
+            </div>
+            <div class="doctor-stats">
+              <div class="doctor-stat">
+                <span class="stat-num">12</span>
+                <span class="stat-text">İl təcrübə</span>
+              </div>
+              <div class="doctor-stat">
+                <span class="stat-num">350+</span>
+                <span class="stat-text">Uşaq</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="doctor-card">
+          <div class="doctor-header"></div>
+          <div class="doctor-avatar">
+            <img
+              src="https://images.unsplash.com/photo-1594824506256-9b7b50b8b8d4?w=100&h=100&fit=crop&crop=face"
+              alt="Dr. Sona Aslanova"
+            />
+          </div>
+          <div class="doctor-info">
+            <h3 class="doctor-name">Dr. Sona Aslanova</h3>
+            <div class="doctor-specialty">Psixoterapevt</div>
+            <div class="doctor-rating">
+              <i class="fas fa-star star"></i>
+              <i class="fas fa-star star"></i>
+              <i class="fas fa-star star"></i>
+              <i class="fas fa-star star"></i>
+              <i class="fas fa-star star"></i>
+            </div>
+            <div class="doctor-stats">
+              <div class="doctor-stat">
+                <span class="stat-num">18</span>
+                <span class="stat-text">İl təcrübə</span>
+              </div>
+              <div class="doctor-stat">
+                <span class="stat-num">750+</span>
+                <span class="stat-text">Seansa</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+      <div class="testimonials-container">
+        <h2 class="section-title">Müştəri Rəyləri</h2>
+        <div class="testimonials-grid">
+          <div class="testimonial-card">
+            <div class="testimonial-avatar">
+              <img
+                src="https://images.unsplash.com/photo-1494790108755-2616b612b3c5?w=80&h=80&fit=crop&crop=face"
+                alt="Ayşən H."
+              />
+            </div>
+            <div class="testimonial-content">
+              <p>
+                "PsyCenter sayəsində həyatım tamamilə dəyişdi. AI köməkçi və
+                peşəkar həkimlərlə stress problemimi həll etdim."
+              </p>
+              <div class="testimonial-author">
+                <strong>Ayşən H.</strong>
+                <span>İnsan Resursları Mütəxəssisi</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="testimonial-avatar">
+              <img
+                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face"
+                alt="Rəşad M."
+              />
+            </div>
+            <div class="testimonial-content">
+              <p>
+                "Online terapiya seansları çox rahatdır. Evdən çıxmadan
+                keyfiyyətli psixoloji dəstək almaq mümkündür."
+              </p>
+              <div class="testimonial-author">
+                <strong>Rəşad M.</strong>
+                <span>Proqramçı</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="testimonial-avatar">
+              <img
+                src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop&crop=face"
+                alt="Günel A."
+              />
+            </div>
+            <div class="testimonial-content">
+              <p>
+                "Depresiya testləri çox dəqiqdir. Həkimlərin professional
+                yanaşması və empatiyası tərifə layiqdir."
+              </p>
+              <div class="testimonial-author">
+                <strong>Günel A.</strong>
+                <span>Müəllim</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+      <div class="cta-content">
+        <h2 class="cta-title">Zihinsel Sağlamlığınızı İndi Yaxşılaşdırın</h2>
+        <p class="cta-subtitle">
+          Pulsuz test ilə başlayın və peşəkar dəstək alın. Səadətli həyatınıza
+          doğru ilk addımı atın.
+        </p>
+        <div class="cta-buttons">
+          <a href="#" class="btn btn-white">
+            <i class="fas fa-rocket"></i>
+            İndi Başlayın
+          </a>
+          <a
+            href="#"
+            class="btn btn-outline"
+            style="color: white; border-color: white"
+          >
+            <i class="fas fa-phone"></i>
+            Bizimlə Əlaqə
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-brand">
+          <h3>PsyCenter</h3>
+          <p>
+            Zihinsel sağlığınız üçün 24/7 rəqəmsal dəstək. Bizimlə güvənli və
+            elmi əsaslı bir yolda irəliləyin.
+          </p>
+        </div>
+        <div class="footer-links">
+          <div class="footer-section">
+            <h4>Xidmətlər</h4>
+            <a href="#">Online Terapiya</a>
+            <a href="#">Psixoloji Testlər</a>
+            <a href="#">AI Köməkçi</a>
+            <a href="#">Randevu Sistemi</a>
+          </div>
+          <div class="footer-section">
+            <h4>Şirkət</h4>
+            <a href="#">Haqqımızda</a>
+            <a href="#">Komanda</a>
+            <a href="#">Blog</a>
+            <a href="#">Karyera</a>
+          </div>
+          <div class="footer-section">
+            <h4>Dəstək</h4>
+            <a href="#">Yardım Mərkəzi</a>
+            <a href="#">Əlaqə</a>
+            <a href="#">Şərtlər</a>
+            <a href="#">Məxfilik</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 PsyCenter. Bütün huquqlar qorunur.</p>
+      </div>
+    </footer>
+  </body>
+</html>
