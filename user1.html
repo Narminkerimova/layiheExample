@@ -1,0 +1,1339 @@
+<!DOCTYPE html>
+<html lang="az">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard - PsyCenter</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      /* Dashboard Styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --primary: #7dd3c0;
+        --primary-dark: #5cb3a1;
+        --secondary: #ffd93d;
+        --accent: #6c5ce7;
+        --neutral-100: #f8fafc;
+        --neutral-200: #e2e8f0;
+        --neutral-300: #cbd5e1;
+        --neutral-400: #94a3b8;
+        --neutral-500: #64748b;
+        --neutral-600: #475569;
+        --neutral-700: #334155;
+        --neutral-800: #1e293b;
+        --neutral-900: #0f172a;
+        --success: #10b981;
+        --warning: #f59e0b;
+        --danger: #ef4444;
+        --info: #3b82f6;
+        --gradient-main: linear-gradient(135deg, #7dd3c0 0%, #a8e6cf 100%);
+        --gradient-warm: linear-gradient(135deg, #ffd93d 0%, #ffb347 100%);
+        --shadow-soft: 0 10px 25px -5px rgba(0, 0, 0, 0.1),
+          0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        --shadow-strong: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+          0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      }
+
+      body {
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Roboto, sans-serif;
+        line-height: 1.6;
+        color: var(--neutral-800);
+        background: var(--neutral-100);
+        overflow-x: hidden;
+      }
+
+      * {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      /* Header */
+      .header {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid rgba(125, 211, 192, 0.1);
+        z-index: 1000;
+        box-shadow: var(--shadow-soft);
+      }
+
+      .nav {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-size: 1.75rem;
+        font-weight: 800;
+        color: var(--primary);
+        text-decoration: none;
+      }
+
+      .logo-icon {
+        width: 40px;
+        height: 40px;
+        background: var(--gradient-main);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.2rem;
+      }
+
+      .nav-menu {
+        display: flex;
+        list-style: none;
+        gap: 2.5rem;
+        align-items: center;
+      }
+
+      .nav-link {
+        text-decoration: none;
+        color: var(--neutral-600);
+        font-weight: 500;
+        position: relative;
+        padding: 0.5rem 0;
+      }
+
+      .nav-link:hover,
+      .nav-link.active {
+        color: var(--primary);
+      }
+
+      .nav-link::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: var(--gradient-main);
+        border-radius: 1px;
+        transition: width 0.3s ease;
+      }
+
+      .nav-link:hover::after,
+      .nav-link.active::after {
+        width: 100%;
+      }
+
+      /* User Menu */
+      .user-menu {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 0.5rem 1rem;
+        background: white;
+        border: 1px solid var(--neutral-200);
+        border-radius: 50px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .user-menu:hover {
+        border-color: var(--primary);
+        box-shadow: var(--shadow-card);
+      }
+
+      .user-avatar {
+        width: 40px;
+        height: 40px;
+        background: var(--gradient-main);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1rem;
+      }
+
+      .user-info {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .user-name {
+        font-weight: 600;
+        font-size: 0.9rem;
+        color: var(--neutral-800);
+      }
+
+      .user-status {
+        font-size: 0.8rem;
+        color: var(--primary);
+        font-weight: 500;
+      }
+
+      .dropdown-arrow {
+        color: var(--neutral-400);
+        font-size: 0.8rem;
+      }
+
+      /* Main Content */
+      .main-content {
+        margin-top: 80px;
+        min-height: calc(100vh - 80px);
+      }
+
+      .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 2rem;
+      }
+
+      /* Welcome Section */
+      .welcome-section {
+        padding: 3rem 0;
+        background: linear-gradient(135deg, var(--neutral-100) 0%, white 100%);
+      }
+
+      .welcome-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 2rem;
+      }
+
+      .welcome-title {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: var(--neutral-800);
+        margin-bottom: 0.5rem;
+        background: linear-gradient(135deg, var(--neutral-800), var(--primary));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .welcome-subtitle {
+        font-size: 1.1rem;
+        color: var(--neutral-600);
+      }
+
+      .welcome-actions {
+        display: flex;
+        gap: 1rem;
+        flex-shrink: 0;
+      }
+
+      /* Buttons */
+      .btn {
+        padding: 0.75rem 1.5rem;
+        border-radius: 12px;
+        font-weight: 600;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        font-size: 0.9rem;
+      }
+
+      .btn-sm {
+        padding: 0.5rem 1rem;
+        font-size: 0.8rem;
+      }
+
+      .btn::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.2),
+          transparent
+        );
+        transition: left 0.5s;
+      }
+
+      .btn:hover::before {
+        left: 100%;
+      }
+
+      .btn-primary {
+        background: var(--gradient-main);
+        color: white;
+        border: none;
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 30px rgba(125, 211, 192, 0.4);
+      }
+
+      .btn-outline {
+        background: transparent;
+        color: var(--primary);
+        border: 2px solid var(--primary);
+      }
+
+      .btn-outline:hover {
+        background: var(--primary);
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(125, 211, 192, 0.3);
+      }
+
+      /* Stats Section */
+      .stats-section {
+        padding: 2rem 0;
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+      }
+
+      .stat-card {
+        background: white;
+        padding: 2rem;
+        border-radius: 20px;
+        box-shadow: var(--shadow-card);
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        border: 1px solid var(--neutral-200);
+        transition: all 0.3s ease;
+      }
+
+      .stat-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-strong);
+      }
+
+      .stat-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        color: white;
+      }
+
+      .stat-icon.primary {
+        background: var(--gradient-main);
+      }
+      .stat-icon.success {
+        background: linear-gradient(135deg, var(--success), #34d399);
+      }
+      .stat-icon.warning {
+        background: linear-gradient(135deg, var(--warning), #fbbf24);
+      }
+      .stat-icon.info {
+        background: linear-gradient(135deg, var(--info), #60a5fa);
+      }
+
+      .stat-number {
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--neutral-800);
+        line-height: 1;
+      }
+
+      .stat-label {
+        font-size: 0.9rem;
+        color: var(--neutral-600);
+        margin: 0.25rem 0;
+      }
+
+      .stat-trend {
+        font-size: 0.8rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+      }
+
+      .stat-trend.positive {
+        color: var(--success);
+      }
+      .stat-trend.negative {
+        color: var(--danger);
+      }
+
+      /* Dashboard Grid */
+      .dashboard-grid {
+        padding: 2rem 0 4rem;
+      }
+
+      .grid-layout {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: 1.5rem;
+      }
+
+      .dashboard-card {
+        background: white;
+        border-radius: 20px;
+        box-shadow: var(--shadow-card);
+        border: 1px solid var(--neutral-200);
+        overflow: hidden;
+        transition: all 0.3s ease;
+      }
+
+      .dashboard-card:hover {
+        box-shadow: var(--shadow-strong);
+      }
+
+      .dashboard-card.large {
+        grid-column: span 8;
+      }
+
+      .dashboard-card:not(.large) {
+        grid-column: span 4;
+      }
+
+      .card-header {
+        padding: 1.5rem 2rem;
+        border-bottom: 1px solid var(--neutral-200);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .card-title {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--neutral-800);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .card-title i {
+        color: var(--primary);
+      }
+
+      .card-link {
+        color: var(--primary);
+        text-decoration: none;
+        font-size: 0.9rem;
+        font-weight: 600;
+      }
+
+      .card-link:hover {
+        text-decoration: underline;
+      }
+
+      .card-content {
+        padding: 2rem;
+      }
+
+      /* Chart Placeholder */
+      .chart-placeholder {
+        height: 300px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+      }
+
+      .chart-bars {
+        display: flex;
+        align-items: end;
+        gap: 1rem;
+        height: 200px;
+        margin-bottom: 2rem;
+      }
+
+      .bar {
+        width: 40px;
+        background: var(--gradient-main);
+        border-radius: 4px 4px 0 0;
+        animation: growUp 1s ease-out;
+      }
+
+      @keyframes growUp {
+        from {
+          height: 0;
+        }
+        to {
+          height: var(--height);
+        }
+      }
+
+      .chart-legend {
+        display: flex;
+        gap: 2rem;
+      }
+
+      .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.9rem;
+        color: var(--neutral-600);
+      }
+
+      .legend-color {
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+      }
+
+      .legend-color.primary {
+        background: var(--primary);
+      }
+      .legend-color.success {
+        background: var(--success);
+      }
+
+      /* Test List */
+      .test-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .test-item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem;
+        background: var(--neutral-100);
+        border-radius: 12px;
+        transition: all 0.3s ease;
+      }
+
+      .test-item:hover {
+        background: var(--neutral-200);
+        transform: translateX(4px);
+      }
+
+      .test-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1rem;
+      }
+
+      .test-icon.stress {
+        background: linear-gradient(135deg, var(--danger), #f87171);
+      }
+      .test-icon.depression {
+        background: linear-gradient(135deg, var(--info), #60a5fa);
+      }
+      .test-icon.anxiety {
+        background: linear-gradient(135deg, var(--warning), #fbbf24);
+      }
+
+      .test-info {
+        flex: 1;
+      }
+
+      .test-name {
+        font-weight: 600;
+        color: var(--neutral-800);
+      }
+      .test-date {
+        font-size: 0.8rem;
+        color: var(--neutral-500);
+      }
+
+      .test-score {
+        font-weight: 700;
+        color: var(--primary);
+        font-size: 0.9rem;
+      }
+
+      /* Appointments */
+      .appointment-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      .appointment-item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem;
+        background: var(--neutral-100);
+        border-radius: 12px;
+        transition: all 0.3s ease;
+      }
+
+      .appointment-item:hover {
+        background: var(--neutral-200);
+        transform: translateX(4px);
+      }
+
+      .appointment-date {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 0.5rem;
+        background: var(--gradient-main);
+        border-radius: 10px;
+        color: white;
+        min-width: 60px;
+      }
+
+      .date-day {
+        font-size: 1.5rem;
+        font-weight: 800;
+        line-height: 1;
+      }
+
+      .date-month {
+        font-size: 0.8rem;
+        font-weight: 600;
+        text-transform: uppercase;
+      }
+
+      .appointment-info {
+        flex: 1;
+      }
+
+      .doctor-name {
+        font-weight: 600;
+        color: var(--neutral-800);
+        margin-bottom: 0.25rem;
+      }
+
+      .appointment-time {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.9rem;
+        color: var(--neutral-600);
+        margin-bottom: 0.25rem;
+      }
+
+      .appointment-type {
+        font-size: 0.8rem;
+        color: var(--neutral-500);
+      }
+
+      .appointment-status {
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        text-align: center;
+      }
+
+      .appointment-status.scheduled {
+        background: rgba(125, 211, 192, 0.1);
+        color: var(--primary);
+      }
+
+      .appointment-status.confirmed {
+        background: rgba(16, 185, 129, 0.1);
+        color: var(--success);
+      }
+
+      /* Quick Actions */
+      .quick-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .action-item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem;
+        background: var(--neutral-100);
+        border-radius: 12px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+
+      .action-item:hover {
+        background: var(--neutral-200);
+        transform: translateX(4px);
+      }
+
+      .action-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--gradient-main);
+        color: white;
+        font-size: 1rem;
+      }
+
+      .action-text {
+        flex: 1;
+      }
+
+      .action-title {
+        font-weight: 600;
+        color: var(--neutral-800);
+        margin-bottom: 0.25rem;
+      }
+
+      .action-desc {
+        font-size: 0.8rem;
+        color: var(--neutral-500);
+      }
+
+      /* Mood Selector */
+      .mood-selector {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      .mood-options {
+        display: flex;
+        justify-content: space-between;
+        gap: 0.5rem;
+      }
+
+      .mood-option {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: 3px solid transparent;
+      }
+
+      .mood-option:hover {
+        transform: scale(1.1);
+        border-color: var(--neutral-300);
+      }
+
+      .mood-option.active {
+        border-color: var(--primary);
+        background: rgba(125, 211, 192, 0.1);
+        transform: scale(1.15);
+      }
+
+      .mood-note {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .mood-note textarea {
+        width: 100%;
+        min-height: 80px;
+        padding: 1rem;
+        border: 2px solid var(--neutral-200);
+        border-radius: 12px;
+        font-family: inherit;
+        font-size: 0.9rem;
+        color: var(--neutral-700);
+        resize: vertical;
+        transition: all 0.3s ease;
+      }
+
+      .mood-note textarea:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(125, 211, 192, 0.1);
+      }
+
+      .mood-note textarea::placeholder {
+        color: var(--neutral-400);
+      }
+
+      /* Responsive Design */
+      @media (max-width: 1200px) {
+        .dashboard-card.large {
+          grid-column: span 12;
+        }
+        
+        .dashboard-card:not(.large) {
+          grid-column: span 6;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .nav {
+          padding: 1rem;
+        }
+
+        .nav-menu {
+          display: none;
+        }
+
+        .container {
+          padding: 0 1rem;
+        }
+
+        .welcome-content {
+          flex-direction: column;
+          text-align: center;
+          gap: 2rem;
+        }
+
+        .welcome-title {
+          font-size: 2rem;
+        }
+
+        .welcome-actions {
+          justify-content: center;
+        }
+
+        .stats-grid {
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        }
+
+        .grid-layout {
+          grid-template-columns: 1fr;
+        }
+
+        .dashboard-card,
+        .dashboard-card.large {
+          grid-column: span 1;
+        }
+
+        .user-menu {
+          padding: 0.5rem;
+        }
+
+        .user-info {
+          display: none;
+        }
+
+        .chart-bars {
+          gap: 0.5rem;
+        }
+
+        .bar {
+          width: 30px;
+        }
+
+        .mood-options {
+          justify-content: center;
+          flex-wrap: wrap;
+        }
+
+        .mood-option {
+          width: 45px;
+          height: 45px;
+          font-size: 1.3rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .welcome-title {
+          font-size: 1.5rem;
+        }
+
+        .stats-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .stat-card {
+          padding: 1.5rem;
+        }
+
+        .stat-icon {
+          width: 50px;
+          height: 50px;
+          font-size: 1.2rem;
+        }
+
+        .stat-number {
+          font-size: 1.5rem;
+        }
+
+        .btn {
+          padding: 0.5rem 1rem;
+          font-size: 0.8rem;
+        }
+
+        .welcome-actions {
+          flex-direction: column;
+          width: 100%;
+        }
+
+        .btn {
+          width: 100%;
+          justify-content: center;
+        }
+      }
+
+      /* Animation Utilities */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes fadeInLeft {
+        from {
+          opacity: 0;
+          transform: translateX(-30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      @keyframes pulse {
+        0%, 100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+        }
+      }
+
+      /* Loading States */
+      .loading {
+        animation: pulse 2s infinite;
+      }
+
+      /* Focus States */
+      .btn:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(125, 211, 192, 0.3);
+      }
+
+      .nav-link:focus {
+        outline: none;
+        color: var(--primary);
+      }
+
+      /* Print Styles */
+      @media print {
+        .header,
+        .welcome-actions,
+        .btn {
+          display: none;
+        }
+
+        .main-content {
+          margin-top: 0;
+        }
+
+        .dashboard-card {
+          break-inside: avoid;
+          box-shadow: none;
+          border: 1px solid var(--neutral-300);
+        }
+      }
+
+      /* High Contrast Mode */
+      @media (prefers-contrast: high) {
+        :root {
+          --neutral-100: #ffffff;
+          --neutral-200: #e0e0e0;
+          --neutral-800: #000000;
+        }
+
+        .dashboard-card {
+          border: 2px solid var(--neutral-800);
+        }
+      }
+
+      /* Reduced Motion */
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <nav class="nav">
+        <a href="index.html" class="logo">
+          <div class="logo-icon">
+            <i class="fas fa-brain"></i>
+          </div>
+          PsyCenter
+        </a>
+
+        <ul class="nav-menu">
+          <li>
+            <a href="dashboard.html" class="nav-link active">Dashboard</a>
+          </li>
+          <li><a href="quiz.html" class="nav-link">Testlər</a></li>
+          <li><a href="centers.html" class="nav-link">Mərkəzlər</a></li>
+          <li><a href="blogs.html" class="nav-link">Blog</a></li>
+        </ul>
+
+        <div class="nav-actions">
+          <div class="user-menu">
+            <div class="user-avatar">
+              <i class="fas fa-user"></i>
+            </div>
+            <div class="user-info">
+              <span class="user-name">Əli Məmmədov</span>
+              <span class="user-status">Premium</span>
+            </div>
+            <div class="dropdown-arrow">
+              <i class="fas fa-chevron-down"></i>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Welcome Section -->
+      <section class="welcome-section">
+        <div class="container">
+          <div class="welcome-content">
+            <div class="welcome-text">
+              <h1 class="welcome-title">Xoş gəlmisiniz, Əli!</h1>
+              <p class="welcome-subtitle">
+                Bu həftə necə hiss edirsiniz? Gəlin birlikdə irəliləyişinizi
+                izləyək.
+              </p>
+            </div>
+            <div class="welcome-actions">
+              <a href="quiz.html" class="btn btn-primary">
+                <i class="fas fa-play"></i>
+                Yeni Test Başlat
+              </a>
+              <a href="#" class="btn btn-outline">
+                <i class="fas fa-calendar"></i>
+                Randevu Al
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Quick Stats -->
+      <section class="stats-section">
+        <div class="container">
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-icon primary">
+                <i class="fas fa-chart-line"></i>
+              </div>
+              <div class="stat-content">
+                <div class="stat-number">42</div>
+                <div class="stat-label">Stress Səviyyəsi</div>
+                <div class="stat-trend positive">
+                  <i class="fas fa-arrow-down"></i>
+                  8% azalıb
+                </div>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon success">
+                <i class="fas fa-smile"></i>
+              </div>
+              <div class="stat-content">
+                <div class="stat-number">7.2</div>
+                <div class="stat-label">Əhval-Ruhiyyə</div>
+                <div class="stat-trend positive">
+                  <i class="fas fa-arrow-up"></i>
+                  12% yaxşılaşıb
+                </div>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon warning">
+                <i class="fas fa-bed"></i>
+              </div>
+              <div class="stat-content">
+                <div class="stat-number">6.5h</div>
+                <div class="stat-label">Yuxu Müddəti</div>
+                <div class="stat-trend negative">
+                  <i class="fas fa-arrow-down"></i>
+                  30 dəq azalıb
+                </div>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon info">
+                <i class="fas fa-calendar-check"></i>
+              </div>
+              <div class="stat-content">
+                <div class="stat-number">12</div>
+                <div class="stat-label">Tamamlanan Seans</div>
+                <div class="stat-trend positive">
+                  <i class="fas fa-plus"></i>
+                  2 yeni
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Main Dashboard Grid -->
+      <section class="dashboard-grid">
+        <div class="container">
+          <div class="grid-layout">
+            <!-- Progress Chart -->
+            <div class="dashboard-card large">
+              <div class="card-header">
+                <h3 class="card-title">
+                  <i class="fas fa-chart-area"></i>
+                  Son 30 Günlük İrəliləyiş
+                </h3>
+                <div class="card-actions">
+                  <button class="btn btn-sm btn-outline">
+                    <i class="fas fa-download"></i>
+                    Export
+                  </button>
+                </div>
+              </div>
+              <div class="card-content">
+                <div class="chart-placeholder">
+                  <div class="chart-bars">
+                    <div class="bar" style="height: 60%"></div>
+                    <div class="bar" style="height: 45%"></div>
+                    <div class="bar" style="height: 70%"></div>
+                    <div class="bar" style="height: 55%"></div>
+                    <div class="bar" style="height: 40%"></div>
+                    <div class="bar" style="height: 65%"></div>
+                    <div class="bar" style="height: 50%"></div>
+                  </div>
+                  <div class="chart-legend">
+                    <div class="legend-item">
+                      <span class="legend-color primary"></span>
+                      Stress
+                    </div>
+                    <div class="legend-item">
+                      <span class="legend-color success"></span>
+                      Əhval-Ruhiyyə
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Recent Tests -->
+            <div class="dashboard-card">
+              <div class="card-header">
+                <h3 class="card-title">
+                  <i class="fas fa-clipboard-list"></i>
+                  Son Testlər
+                </h3>
+                <a href="quiz.html" class="card-link">Hamısını Gör</a>
+              </div>
+              <div class="card-content">
+                <div class="test-list">
+                  <div class="test-item">
+                    <div class="test-icon stress">
+                      <i class="fas fa-brain"></i>
+                    </div>
+                    <div class="test-info">
+                      <div class="test-name">Stress Analizi</div>
+                      <div class="test-date">2 gün əvvəl</div>
+                    </div>
+                    <div class="test-score">42/100</div>
+                  </div>
+
+                  <div class="test-item">
+                    <div class="test-icon depression">
+                      <i class="fas fa-heart"></i>
+                    </div>
+                    <div class="test-info">
+                      <div class="test-name">Depresiya Testi</div>
+                      <div class="test-date">5 gün əvvəl</div>
+                    </div>
+                    <div class="test-score">18/60</div>
+                  </div>
+
+                  <div class="test-item">
+                    <div class="test-icon anxiety">
+                      <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="test-info">
+                      <div class="test-name">Anksiyete Qiymətləndirmə</div>
+                      <div class="test-date">1 həftə əvvəl</div>
+                    </div>
+                    <div class="test-score">25/84</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Upcoming Appointments -->
+            <div class="dashboard-card">
+              <div class="card-header">
+                <h3 class="card-title">
+                  <i class="fas fa-calendar-alt"></i>
+                  Gələn Randevular
+                </h3>
+                <a href="#" class="card-link">Hamısını Gör</a>
+              </div>
+              <div class="card-content">
+                <div class="appointment-list">
+                  <div class="appointment-item">
+                    <div class="appointment-date">
+                      <div class="date-day">15</div>
+                      <div class="date-month">Yan</div>
+                    </div>
+                    <div class="appointment-info">
+                      <div class="doctor-name">Dr. Rəna Əliyeva</div>
+                      <div class="appointment-time">
+                        <i class="fas fa-clock"></i>
+                        14:30
+                      </div>
+                      <div class="appointment-type">Video Konsultasiya</div>
+                    </div>
+                    <div class="appointment-status scheduled">
+                      Planlaşdırılıb
+                    </div>
+                  </div>
+
+                  <div class="appointment-item">
+                    <div class="appointment-date">
+                      <div class="date-day">18</div>
+                      <div class="date-month">Yan</div>
+                    </div>
+                    <div class="appointment-info">
+                      <div class="doctor-name">Dr. Elvin Quliyev</div>
+                      <div class="appointment-time">
+                        <i class="fas fa-clock"></i>
+                        10:00
+                      </div>
+                      <div class="appointment-type">Üz-üzə Görüş</div>
+                    </div>
+                    <div class="appointment-status confirmed">Təsdiqlənib</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="dashboard-card">
+              <div class="card-header">
+                <h3 class="card-title">
+                  <i class="fas fa-rocket"></i>
+                  Tez Əməliyyatlar
+                </h3>
+              </div>
+              <div class="card-content">
+                <div class="quick-actions">
+                  <a href="#" class="action-item">
+                    <div class="action-icon">
+                      <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="action-text">
+                      <div class="action-title">AI Köməkçi</div>
+                      <div class="action-desc">Sual ver</div>
+                    </div>
+                  </a>
+
+                  <a href="#" class="action-item">
+                    <div class="action-icon">
+                      <i class="fas fa-journal-whills"></i>
+                    </div>
+                    <div class="action-text">
+                      <div class="action-title">Günlük</div>
+                      <div class="action-desc">Yazmağa başla</div>
+                    </div>
+                  </a>
+
+                  <a href="#" class="action-item">
+                    <div class="action-icon">
+                      <i class="fas fa-spa"></i>
+                    </div>
+                    <div class="action-text">
+                      <div class="action-title">Meditasiya</div>
+                      <div class="action-desc">Rahatlan</div>
+                    </div>
+                  </a>
+
+                  <a href="#" class="action-item">
+                    <div class="action-icon">
+                      <i class="fas fa-dumbbell"></i>
+                    </div>
+                    <div class="action-text">
+                      <div class="action-title">Məşqlər</div>
+                      <div class="action-desc">Hərəkət et</div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Daily Mood -->
+            <div class="dashboard-card">
+              <div class="card-header">
+                <h3 class="card-title">
+                  <i class="fas fa-smile"></i>
+                  Bu günün əhval-ruhiyyəsi
+                </h3>
+              </div>
+              <div class="card-content">
+                <div class="mood-selector">
+                  <div class="mood-options">
+                    <div class="mood-option" data-mood="1">😫</div>
+                    <div class="mood-option" data-mood="2">😔</div>
+                    <div class="mood-option active" data-mood="3">😐</div>
+                    <div class="mood-option" data-mood="4">🙂</div>
+                    <div class="mood-option" data-mood="5">😊</div>
+                  </div>
+                  <div class="mood-note">
+                    <textarea
+                      placeholder="Bu gün necə hiss etdiyinizi qeyd edin..."
+                    ></textarea>
+                    <button class="btn btn-sm btn-primary">
+                      <i class="fas fa-save"></i>
+                      Saxla
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="dashboard.js"></script>
+  </body>
+</html>
