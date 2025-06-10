@@ -1,0 +1,1539 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mərkəzlərimiz - PsyCenter</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Centers Page Styles */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary: #7dd3c0;
+    --primary-dark: #5cb3a1;
+    --secondary: #ffd93d;
+    --accent: #6c5ce7;
+    --neutral-100: #f8fafc;
+    --neutral-200: #e2e8f0;
+    --neutral-300: #cbd5e1;
+    --neutral-800: #1e293b;
+    --neutral-600: #475569;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --error: #ef4444;
+    --gradient-main: linear-gradient(135deg, #7dd3c0 0%, #a8e6cf 100%);
+    --gradient-warm: linear-gradient(135deg, #ffd93d 0%, #ffb347 100%);
+    --gradient-accent: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+    --shadow-soft: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    --shadow-strong: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+body {
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    line-height: 1.6;
+    color: var(--neutral-800);
+    background: var(--neutral-100);
+    overflow-x: hidden;
+}
+
+/* Smooth animations */
+* {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Header Styles */
+.header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(125, 211, 192, 0.1);
+    z-index: 1000;
+    transform: translateY(0);
+}
+
+.header.scrolled {
+    transform: translateY(0);
+    box-shadow: var(--shadow-soft);
+}
+
+.nav {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: var(--primary);
+    text-decoration: none;
+}
+
+.logo-icon {
+    width: 40px;
+    height: 40px;
+    background: var(--gradient-main);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.2rem;
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 2.5rem;
+    align-items: center;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: var(--neutral-600);
+    font-weight: 500;
+    position: relative;
+    padding: 0.5rem 0;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: var(--primary);
+}
+
+.nav-link::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--gradient-main);
+    border-radius: 1px;
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+    width: 100%;
+}
+
+.nav-actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    font-size: 0.95rem;
+}
+
+.btn::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.btn:hover::before {
+    left: 100%;
+}
+
+.btn-outline {
+    background: transparent;
+    color: var(--primary);
+    border: 2px solid var(--primary);
+}
+
+.btn-outline:hover {
+    background: var(--primary);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(125, 211, 192, 0.3);
+}
+
+.btn-primary {
+    background: var(--gradient-main);
+    color: white;
+    border: none;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(125, 211, 192, 0.4);
+}
+
+.btn-white {
+    background: white;
+    color: var(--primary);
+    border: 2px solid white;
+}
+
+.btn-white:hover {
+    background: rgba(255, 255, 255, 0.9);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Page Header */
+.page-header {
+    padding: 150px 0 80px;
+    background: var(--gradient-main);
+    color: white;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.page-header::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" preserveAspectRatio="none"><path d="M0,0 C150,100 350,0 500,50 C650,100 850,0 1000,50 L1000,100 L0,100 Z" fill="rgba(255,255,255,0.1)"></path></svg>') no-repeat bottom;
+    background-size: cover;
+}
+
+.header-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    position: relative;
+    z-index: 2;
+}
+
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+.breadcrumb a {
+    color: white;
+    text-decoration: none;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+}
+
+.breadcrumb a:hover {
+    opacity: 1;
+}
+
+.breadcrumb i {
+    font-size: 0.7rem;
+}
+
+.page-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+}
+
+.page-subtitle {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* Search & Filter Section */
+.search-section {
+    padding: 60px 0;
+    background: white;
+    border-bottom: 1px solid var(--neutral-200);
+}
+
+.search-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+}
+
+.search-box {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+}
+
+.search-box i {
+    position: absolute;
+    left: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--neutral-600);
+    font-size: 1.1rem;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 1rem 1rem 1rem 3.5rem;
+    border: 2px solid var(--neutral-200);
+    border-radius: 15px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+.search-box input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(125, 211, 192, 0.1);
+}
+
+.filter-buttons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.filter-btn {
+    padding: 0.75rem 1.5rem;
+    border: 2px solid var(--neutral-200);
+    background: white;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 500;
+    color: var(--neutral-600);
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+    border-color: var(--primary);
+    background: var(--primary);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(125, 211, 192, 0.3);
+}
+
+/* Centers Section */
+.centers-section {
+    padding: 80px 0;
+    background: var(--neutral-100);
+}
+
+.centers-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.centers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+}
+
+.center-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.center-card.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.center-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-strong);
+}
+
+.center-header {
+    position: relative;
+    height: 200px;
+    background: var(--gradient-main);
+    overflow: hidden;
+}
+
+.center-image {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background: linear-gradient(45deg, var(--primary) 0%, var(--primary-dark) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.center-image::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="40" r="1.5" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="80" r="1" fill="rgba(255,255,255,0.1)"/></svg>');
+    opacity: 0.3;
+}
+
+.center-badge {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: var(--secondary);
+    color: var(--neutral-800);
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.center-status {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.center-status i {
+    color: var(--success);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+.center-content {
+    padding: 2rem;
+}
+
+.center-info {
+    margin-bottom: 1.5rem;
+}
+
+.center-name {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--neutral-800);
+    margin-bottom: 0.75rem;
+}
+
+.center-location,
+.center-contact {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--neutral-600);
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+}
+
+.center-location i,
+.center-contact i {
+    color: var(--primary);
+    width: 16px;
+}
+
+.center-services {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.service-tag {
+    background: var(--neutral-100);
+    color: var(--neutral-700);
+    padding: 0.4rem 0.8rem;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    border: 1px solid var(--neutral-200);
+}
+
+.center-stats {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background: var(--neutral-100);
+    border-radius: 12px;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--neutral-600);
+}
+
+.stat-item i {
+    color: var(--primary);
+}
+
+.center-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+.center-actions .btn {
+    flex: 1;
+    justify-content: center;
+    padding: 0.75rem 1rem;
+}
+
+/* Map Section */
+.map-section {
+    padding: 80px 0;
+    background: white;
+}
+
+.map-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.map-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.map-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--neutral-800);
+    margin-bottom: 1rem;
+}
+
+.map-subtitle {
+    font-size: 1.1rem;
+    color: var(--neutral-600);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.map-placeholder {
+    height: 400px;
+    background: var(--neutral-100);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed var(--neutral-300);
+}
+
+.map-content {
+    text-align: center;
+    color: var(--neutral-600);
+}
+
+.map-content i {
+    font-size: 4rem;
+    color: var(--primary);
+    margin-bottom: 1rem;
+}
+
+.map-content h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--neutral-800);
+}
+
+.map-content p {
+    margin-bottom: 1.5rem;
+}
+
+/* CTA Section */
+.cta-section {
+    padding: 120px 0;
+    background: linear-gradient(135deg, #667eea 0%, #3954aa 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 118, 117, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(247, 183, 49, 0.2) 0%, transparent 50%);
+}
+
+.cta-section::after {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.05)"/><circle cx="75" cy="75" r="1.5" fill="rgba(255,255,255,0.03)"/><circle cx="50" cy="10" r="0.8" fill="rgba(255,255,255,0.04)"/><circle cx="10" cy="60" r="1.2" fill="rgba(255,255,255,0.02)"/><circle cx="90" cy="30" r="0.6" fill="rgba(255,255,255,0.06)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+    animation: float 20s infinite linear;
+    opacity: 0.7;
+}
+
+@keyframes float {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+.cta-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    position: relative;
+    z-index: 3;
+    text-align: center;
+}
+
+.cta-content {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 30px;
+    padding: 3rem 2.5rem;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-content::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+}
+
+.cta-title {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.02em;
+    color: white;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+.cta-title::after {
+    content: "🔍";
+    position: absolute;
+    top: -10px;
+    right: -50px;
+    font-size: 2rem;
+    opacity: 0.8;
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-10px); }
+    60% { transform: translateY(-5px); }
+}
+
+.cta-subtitle {
+    font-size: 1.3rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 2.5rem;
+    line-height: 1.7;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    text-shadow: 0 1px 10px rgba(0, 0, 0, 0.2);
+}
+
+.cta-buttons {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.cta-buttons .btn {
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 15px;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-buttons .btn::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    transition: all 0.5s ease;
+    transform: translate(-50%, -50%);
+}
+
+.cta-buttons .btn:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.cta-buttons .btn-primary {
+    background: linear-gradient(135deg, #ff6b6b 0%, #feca57 100%);
+    border: none;
+    color: white;
+    box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+}
+
+.cta-buttons .btn-primary:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 15px 35px rgba(255, 107, 107, 0.6);
+}
+
+.cta-buttons .btn-white {
+    background: rgba(255, 255, 255, 0.95);
+    color: #667eea;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+}
+
+.cta-buttons .btn-white:hover {
+    background: white;
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 15px 35px rgba(255, 255, 255, 0.3);
+}
+
+/* Footer */
+.footer {
+    background: var(--neutral-800);
+    color: white;
+    padding: 60px 0 30px;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+}
+
+.footer-brand .logo {
+    color: white;
+    margin-bottom: 1.5rem;
+}
+
+.footer-desc {
+    color: var(--neutral-300);
+    line-height: 1.6;
+    max-width: 300px;
+}
+
+.footer-links {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+.footer-col h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--primary);
+}
+
+.footer-col ul {
+    list-style: none;
+}
+
+.footer-col ul li {
+    margin-bottom: 0.75rem;
+}
+
+.footer-col ul li a {
+    color: var(--neutral-300);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-col ul li a:hover {
+    color: var(--primary);
+}
+
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 2rem;
+    border-top: 1px solid var(--neutral-600);
+    color: var(--neutral-300);
+}
+
+.footer-social {
+    display: flex;
+    gap: 1rem;
+}
+
+.footer-social a {
+    width: 40px;
+    height: 40px;
+    background: var(--neutral-600);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.footer-social a:hover {
+    background: var(--primary);
+    transform: translateY(-2px);
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .centers-grid {
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .nav {
+        padding: 1rem;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+    
+    .nav-menu {
+        gap: 1.5rem;
+        flex-wrap: wrap;
+    }
+    
+    .nav-actions {
+        gap: 0.5rem;
+    }
+    
+    .page-title {
+        font-size: 2.5rem;
+    }
+    
+    .page-subtitle {
+        font-size: 1rem;
+    }
+    
+    .search-container {
+        padding: 0 1rem;
+    }
+    
+    .filter-buttons {
+        gap: 0.5rem;
+    }
+    
+    .filter-btn {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+    }
+    
+    .centers-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .center-actions {
+        flex-direction: column;
+    }
+    
+    .center-stats {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+    
+    .stat-item {
+        justify-content: center;
+    }
+    
+    .cta-title {
+        font-size: 2rem;
+    }
+    
+    .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .footer-links {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .footer-bottom {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .page-header {
+        padding: 120px 0 60px;
+    }
+    
+    .page-title {
+        font-size: 2rem;
+    }
+    
+    .centers-section {
+        padding: 60px 0;
+    }
+    
+    .center-content {
+        padding: 1.5rem;
+    }
+    
+    .center-name {
+        font-size: 1.3rem;
+    }
+    
+    .map-section,
+    .cta-section {
+        padding: 60px 0;
+    }
+    
+    .cta-title {
+        font-size: 1.8rem;
+    }
+}
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <nav class="nav">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                PsyCenter
+            </a>
+
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Ana Səhifə</a></li>
+                <li><a href="#" class="nav-link">Testlər</a></li>
+                <li><a href="#" class="nav-link">Həkimlər</a></li>
+                <li><a href="#" class="nav-link">Blog</a></li>
+                <li><a href="centers.html" class="nav-link active">Mərkəzlərimiz</a></li>
+            </ul>
+
+            <div class="nav-actions">
+                <a href="#" class="btn btn-outline">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Giriş
+                </a>
+                <a href="#" class="btn btn-primary">
+                    <i class="fas fa-user-plus"></i>
+                    Qeydiyyat
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="header-container">
+            <div class="breadcrumb">
+                <a href="index.html">Ana Səhifə</a>
+                <i class="fas fa-chevron-right"></i>
+                <span>Mərkəzlərimiz</span>
+            </div>
+            <h1 class="page-title">Mərkəzlərimiz</h1>
+            <p class="page-subtitle">Azərbaycanın müxtəlif şəhərlərində yerləşən müasir mərkəzlərimizdə peşəkar psixoloji xidmət alın</p>
+        </div>
+    </section>
+
+    <!-- Search & Filter Section -->
+    <section class="search-section">
+        <div class="search-container">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Şəhər və ya mərkəz adı ilə axtar..." id="searchInput">
+            </div>
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-city="all">
+                    <i class="fas fa-globe"></i>
+                    Hamısı
+                </button>
+                <button class="filter-btn" data-city="baku">
+                    <i class="fas fa-building"></i>
+                    Bakı
+                </button>
+                <button class="filter-btn" data-city="ganja">
+                    <i class="fas fa-city"></i>
+                    Gəncə
+                </button>
+                <button class="filter-btn" data-city="sumqayit">
+                    <i class="fas fa-industry"></i>
+                    Sumqayıt
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Centers Grid -->
+    <section class="centers-section">
+        <div class="centers-container">
+            <div class="centers-grid" id="centersGrid">
+                
+                <!-- Bakı Mərkəzləri -->
+                <div class="center-card" data-city="baku">
+                    <div class="center-header">
+                        <div class="center-image">
+                            <div class="center-badge">Premium</div>
+                            <div class="center-status">
+                                <i class="fas fa-circle"></i>
+                                Açıq
+                            </div>
+                        </div>
+                    </div>
+                    <div class="center-content">
+                        <div class="center-info">
+                            <h3 class="center-name">PsyCenter Nəsimi</h3>
+                            <div class="center-location">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Nəsimi r-nu, Azadlıq pr. 12, Bakı
+                            </div>
+                            <div class="center-contact">
+                                <i class="fas fa-phone"></i>
+                                (012) 555-0101
+                            </div>
+                        </div>
+                        
+                        <div class="center-services">
+                            <div class="service-tag">Fərdi Terapiya</div>
+                            <div class="service-tag">Qrup Terapiyası</div>
+                            <div class="service-tag">Uşaq Psixologiyası</div>
+                        </div>
+
+                        <div class="center-stats">
+                            <div class="stat-item">
+                                <i class="fas fa-user-md"></i>
+                                <span>12 həkim</span>
+                            </div>
+                            <div class="stat-item">
+                                <i class="fas fa-clock"></i>
+                                <span>09:00 - 21:00</span>
+                            </div>
+                            <div class="stat-item">
+                                <i class="fas fa-star"></i>
+                                <span>4.9 (156 rəy)</span>
+                            </div>
+                        </div>
+
+                        <div class="center-actions">
+                            <a href="#" class="btn btn-primary">
+                                <i class="fas fa-calendar-check"></i>
+                                Randevu Al
+                            </a>
+                            <a href="#" class="btn btn-outline">
+                                <i class="fas fa-info-circle"></i>
+                                Ətraflı
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="center-card" data-city="baku">
+                    <div class="center-header">
+                        <div class="center-image">
+                            <div class="center-status">
+                                <i class="fas fa-circle"></i>
+                                Açıq
+                            </div>
+                        </div>
+                    </div>
+                    <div class="center-content">
+                        <div class="center-info">
+                            <h3 class="center-name">PsyCenter Yasamal</h3>
+                            <div class="center-location">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Yasamal r-nu, Zərdabi küç. 89, Bakı
+                            </div>
+                            <div class="center-contact">
+                                <i class="fas fa-phone"></i>
+                                (012) 555-0102
+                            </div>
+                        </div>
+                        
+                        <div class="center-services">
+                            <div class="service-tag">Ailə Terapiyası</div>
+                            <div class="service-tag">Stress İdarəetmə</div>
+                            <div class="service-tag">Online Xidmət</div>
+                        </div>
+
+                        <div class="center-stats">
+                            <div class="stat-item">
+                                <i class="fas fa-user-md"></i>
+                                <span>8 həkim</span>
+                            </div>
+                            <div class="stat-item">
+                                <i class="fas fa-clock"></i>
+                                <span>08:00 - 20:00</span>
+                            </div>
+                            <div class="stat-item">
+                                <i class="fas fa-star"></i>
+                                <span>4.7 (98 rəy)</span>
+                            </div>
+                        </div>
+
+                        <div class="center-actions">
+                            <a href="#" class="btn btn-primary">
+                                <i class="fas fa-calendar-check"></i>
+                                Randevu Al
+                            </a>
+                            <a href="#" class="btn btn-outline">
+                                <i class="fas fa-info-circle"></i>
+                                Ətraflı
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="center-card" data-city="baku">
+                    <div class="center-header">
+                        <div class="center-image">
+                            <div class="center-status">
+                                <i class="fas fa-circle"></i>
+                                Açıq
+                            </div>
+                        </div>
+                    </div>
+                    <div class="center-content">
+                        <div class="center-info">
+                            <h3 class="center-name">PsyCenter Səbail</h3>
+                            <div class="center-location">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Səbail r-nu, Nizami küç. 45, Bakı
+                            </div>
+                            <div class="center-contact">
+                                <i class="fas fa-phone"></i>
+                                (012) 555-0103
+                            </div>
+                        </div>
+                        
+                        <div class="center-services">
+                            <div class="service-tag">Travma Terapiyası</div>
+                            <div class="service-tag">Anksiyete</div>
+                            <div class="service-tag">Depresiya</div>
+                        </div>
+
+                        <div class="center-stats">
+                            <div class="stat-item">
+                                <i class="fas fa-user-md"></i>
+                                <span>10 həkim</span>
+                            </div>
+                            <div class="stat-item">
+                                <i class="fas fa-clock"></i>
+                                <span>09:00 - 19:00</span>
+                            </div>
+                            <div class="stat-item">
+                                <i class="fas fa-star"></i>
+                                <span>4.8 (127 rəy)</span>
+                            </div>
+                        </div>
+
+                        <div class="center-actions">
+                            <a href="#" class="btn btn-primary">
+                                <i class="fas fa-calendar-check"></i>
+                                Randevu Al
+                            </a>
+                            <a href="#" class="btn btn-outline">
+                                <i class="fas fa-info-circle"></i>
+                                Ətraflı
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gəncə Mərkəzləri -->
+                <div class="center-card" data-city="ganja">
+                    <div class="center-header">
+                        <div class="center-image">
+                            <div class="center-status">
+                                <i class="fas fa-circle"></i>
+                                Açıq
+                            </div>
+                        </div>
+                    </div>
+                    <div class="center-content">
+                        <div class="center-info">
+                            <h3 class="center-name">PsyCenter Gəncə</h3>
+                            <div class="center-location">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Kəpəz r-nu, Heydər Əliyev pr. 28, Gəncə
+                            </div>
+                            <div class="center-contact">
+                                <i class="fas fa-phone"></i>
+                                (022) 555-0201
+                            </div>
+                        </div>
+                        
+                        <div class="center-services">
+                            <div class="service-tag">Fərdi Terapiya</div>
+                            <div class="service-tag">Ailə Məsləhəti</div>
+                            <div class="service-tag">Yeniyetmə</div>
+                        </div>
+
+                        <div class="center-stats">
+                            <div class="stat-item">
+                                <i class="fas fa-user-md"></i>
+                                <span>6 həkim</span>
+                            </div>
+                            <div class="stat-item">
+                                <i class="fas fa-clock"></i>
+                                <span>09:00 - 18:00</span>
+                            </div>
+                            <div class="stat-item">
+                                <i class="fas fa-star"></i>
+                                <span>4.6 (74 rəy)</span>
+                            </div>
+                        </div>
+
+                        <div class="center-actions">
+                            <a href="#" class="btn btn-primary">
+                                <i class="fas fa-calendar-check"></i>
+                                Randevu Al
+                            </a>
+                            <a href="#" class="btn btn-outline">
+                                <i class="fas fa-info-circle"></i>
+                                Ətraflı
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sumqayıt Mərkəzləri -->
+                <div class="center-card" data-city="sumqayit">
+                    <div class="center-header">
+                        <div class="center-image">
+                            <div class="center-status">
+                                <i class="fas fa-circle"></i>
+                                Açıq
+                            </div>
+                        </div>
+                    </div>
+                    <div class="center-content">
+                        <div class="center-info">
+                            <h3 class="center-name">PsyCenter Sumqayıt</h3>
+                            <div class="center-location">
+                                <i class="fas fa-map-marker-alt"></i>
+                                28-ci məhəllə, Tbilisi pr. 67, Sumqayıt
+                            </div>
+                            <div class="center-contact">
+                                <i class="fas fa-phone"></i>
+                                (018) 555-0301
+                            </div>
+                        </div>
+                        
+                        <div class="center-services">
+                            <div class="service-tag">Mesleki Stress</div>
+                            <div class="service-tag">Fərdi Terapiya</div>
+                            <div class="service-tag">Online Dəstək</div>
+                        </div>
+
+                        <div class="center-stats">
+                            <div class="stat-item">
+                                <i class="fas fa-user-md"></i>
+                                <span>5 həkim</span>
+                            </div>
+                            <div class="stat-item">
+                                <i class="fas fa-clock"></i>
+                                <span>08:30 - 19:30</span>
+                            </div>
+                            <div class="stat-item">
+                                <i class="fas fa-star"></i>
+                                <span>4.5 (52 rəy)</span>
+                            </div>
+                        </div>
+
+                        <div class="center-actions">
+                            <a href="#" class="btn btn-primary">
+                                <i class="fas fa-calendar-check"></i>
+                                Randevu Al
+                            </a>
+                            <a href="#" class="btn btn-outline">
+                                <i class="fas fa-info-circle"></i>
+                                Ətraflı
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Map Section -->
+    <section class="map-section">
+        <div class="map-container">
+            <div class="map-header">
+                <h2 class="map-title">Mərkəzlərimizin Yerləşdiyi Yerlər</h2>
+                <p class="map-subtitle">Sizə ən yaxın mərkəzi tapın və rahatlıqla gəlin</p>
+            </div>
+            <div class="map-placeholder">
+                <div class="map-content">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <h3>İnteraktiv Xəritə</h3>
+                    <p>Mərkəzlərimizin dəqiq yerləşməsi və yol göstəricisi</p>
+                    <button class="btn btn-primary">
+                        <i class="fas fa-map"></i>
+                        Xəritəni Aç
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-container">
+            <div class="cta-content">
+                <h2 class="cta-title">Sizə Ən Uyğun Mərkəzi Tapmadınız?</h2>
+                <p class="cta-subtitle">
+                    Online xidmətlərimizdən yararlanın və ya bizə müraciət edin. 
+                    Tezliklə yeni mərkəzlər açılacaq!
+                </p>
+                <div class="cta-buttons">
+                    <a href="#" class="btn btn-primary">
+                        <i class="fas fa-video"></i>
+                        Online Randevu
+                    </a>
+                    <a href="#" class="btn btn-white">
+                        <i class="fas fa-phone"></i>
+                        Bizimlə Əlaqə
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="logo">
+                        <div class="logo-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        PsyCenter
+                    </div>
+                    <p class="footer-desc">
+                        Zihinsel sağlığınız üçün 24/7 rəqəmsal dəstək. Bizimlə güvənli və elmi əsaslı bir yolda irəliləyin.
+                    </p>
+                </div>
+                
+                <div class="footer-links">
+                    <div class="footer-col">
+                        <h4>Xidmətlər</h4>
+                        <ul>
+                            <li><a href="#">Psixoloji Testlər</a></li>
+                            <li><a href="#">Online Terapiya</a></li>
+                            <li><a href="#">AI Məsləhətçi</a></li>
+                            <li><a href="#">Həkim Randevusu</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-col">
+                        <h4>Mərkəzlər</h4>
+                        <ul>
+                            <li><a href="#">Bakı Mərkəzləri</a></li>
+                            <li><a href="#">Gəncə Mərkəzi</a></li>
+                            <li><a href="#">Sumqayıt Mərkəzi</a></li>
+                            <li><a href="#">Yeni Mərkəzlər</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-col">
+                        <h4>Dəstək</h4>
+                        <ul>
+                            <li><a href="#">Yardım Mərkəzi</a></li>
+                            <li><a href="#">Əlaqə</a></li>
+                            <li><a href="#">SSS</a></li>
+                            <li><a href="#">Şərtlər</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 PsyCenter. Bütün huquqlar qorunur.</p>
+                <div class="footer-social">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Filter functionality
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const centerCards = document.querySelectorAll('.center-card');
+        const searchInput = document.getElementById('searchInput');
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                // Add active class to clicked button
+                button.classList.add('active');
+                
+                const city = button.getAttribute('data-city');
+                filterCenters(city);
+            });
+        });
+
+        function filterCenters(city) {
+            centerCards.forEach(card => {
+                if (city === 'all' || card.getAttribute('data-city') === city) {
+                    card.style.display = 'block';
+                    setTimeout(() => {
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, 100);
+                } else {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(20px)';
+                    setTimeout(() => {
+                        card.style.display = 'none';
+                    }, 300);
+                }
+            });
+        }
+
+        // Search functionality
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            
+            centerCards.forEach(card => {
+                const centerName = card.querySelector('.center-name').textContent.toLowerCase();
+                const centerLocation = card.querySelector('.center-location').textContent.toLowerCase();
+                
+                if (centerName.includes(searchTerm) || centerLocation.includes(searchTerm)) {
+                    card.style.display = 'block';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                } else {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(20px)';
+                    setTimeout(() => {
+                        card.style.display = 'none';
+                    }, 300);
+                }
+            });
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all center cards
+        centerCards.forEach(card => {
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>
